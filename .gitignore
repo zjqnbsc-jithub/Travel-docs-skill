@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Trip working data (regenerable; keep trip.example.json only)
+/out/
+/out_*/
+/forecast_png/
+/basemap/
+routes_geom.json
+trip.json
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
