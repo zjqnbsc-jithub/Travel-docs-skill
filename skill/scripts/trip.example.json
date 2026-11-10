@@ -1,0 +1,267 @@
+{
+  "_note": "模板：复制为 trip.json 后逐字段填写。所有坐标必须由 geocode.py 生成，禁止凭记忆填写；本模板中的 0.0 是占位符，不可直接用于出图。示例内容已匿名化（无个人信息、无具体地点）。",
+  "_note_files": "脚本运行顺序：geocode.py --check trip.json → fetch_basemap.py 国家名 → route.py trip.json → build_maps.py trip.json → mk_xlsx.py trip.json → build_weather_pdf.py trip.json，全部产出到 out_dir。",
+
+  "slug": "example",
+  "out_dir": "out",
+  "date_suffix": "1108",
+  "date_range": ["2026-11-03", "2026-11-08"],
+
+  "tag": "定版行程",
+  "title": "定版 · 起点 → 国家公园 → 海滨 → 大城市",
+  "subtitle": "2026/11/03（二）– 11/08（日）　6 天 5 晚　公园 1 晚 · 海滨 2 晚 · 大城市 2 晚",
+  "footer": "示例国 · 自驾环线",
+  "accent": "#e2542c",
+
+  "party": 3,
+  "vehicle": "包车 + 司机，按日计费（含油费过路费）",
+  "fx": { "code": "Rs", "cny": 42, "as_of": "2026-10-14" },
+
+  "panel_end_tag": "到家",
+  "panel_note": "里程与路线取自真实路网（OSRM）。",
+
+  "places": {
+    "start": {
+      "_note": "origin：起终点，画菱形；label = [dx, dy, ha] 或 [dx, dy, ha, va]，单位为经纬度度数",
+      "lon": 0.0, "lat": 0.0, "name": "起点", "name_en": "Start",
+      "kind": "origin", "label": [-0.07, -0.16, "right", "top"]
+    },
+    "park": {
+      "lon": 0.0, "lat": 0.0, "name": "国家公园", "name_en": "National Park",
+      "kind": "overnight", "label": [0.40, 0.16, "left"]
+    },
+    "coast": {
+      "_note": "offset：徽章离标记太近时整体挪开，画虚线指回真实位置",
+      "lon": 0.0, "lat": 0.0, "name": "海滨", "name_en": "Coast Town",
+      "kind": "overnight", "label": [0.30, -0.26, "left"], "offset": [0, 0]
+    },
+    "city": {
+      "lon": 0.0, "lat": 0.0, "name": "大城市", "name_en": "Big City",
+      "kind": "overnight", "label": [0.30, 0.12, "left"]
+    },
+    "town": {
+      "_note": "waypoint：途中经过的灰色小城镇（仅游客版地图显示）",
+      "lon": 0.0, "lat": 0.0, "name": "途经镇", "name_en": "Via Town",
+      "kind": "waypoint", "label": [0.08, 0.12, "center"]
+    },
+    "lookout": {
+      "_note": "visit：橙色空心圈，拍照/参观点",
+      "lon": 0.0, "lat": 0.0, "name": "观景点", "name_en": "Lookout",
+      "kind": "visit", "label": [0.16, 0.12, "left"]
+    }
+  },
+
+  "bounds": null,
+  "_bounds_note": "null = 自动（全部地点 + 路线外扩 12%）；也可写 [lon0, lat0, lon1, lat1] 精确控制，例如把整个国家框进来",
+
+  "legs": {
+    "S1": ["start", "park"],
+    "S2": ["park", "coast"],
+    "S3": ["coast", "city"],
+    "S4": ["city", "start"]
+  },
+  "leg_order": ["S1", "S2", "S3", "S4"],
+
+  "days": [
+    {
+      "day": "D1", "date": "11-03", "date_cn": "11/03 二", "date_en": "Tue 3 Nov",
+      "leg": "S1", "from": "start", "to": "park", "stay": "park",
+      "km": 151, "drive": "2h47", "depart": "08:00", "arrive": "~11:00",
+      "note_cn": "下午园区活动", "note_en": "Park activities PM",
+      "panel_cn": "起点 → 国家公园，下午园区活动",
+      "route_cn": "起点→国家公园", "route_en": "Start -> National Park",
+      "daily_cn": "08:00 出发经高速，中午前到国家公园。下午园区活动。早睡，次日 05:15 起。",
+      "daily_en": "Drive via expressway, arrive by noon. Park activities PM. Early night.",
+      "driver_notes": "Via expressway. PM activity, parking at gate. Early night, 05:15 start tomorrow.",
+      "cost": 62000
+    },
+    {
+      "day": "D2", "date": "11-04", "date_cn": "11/04 三", "date_en": "Wed 4 Nov",
+      "leg": "S2", "from": "park", "to": "coast", "stay": "coast",
+      "km": 168, "drive": "2h26", "depart": "12:00", "arrive": "~14:30",
+      "note_cn": "清晨园区 → 海滨", "note_en": "Dawn park -> beach",
+      "daily_cn": "05:15 出发 06:00 进园约 4h，全程坐车。12:00 出发约 14:30 到海滨，海滩日落。",
+      "daily_en": "Dawn entry 4h from vehicle. Transfer 12:00, arrive ~14:30. Sunset.",
+      "driver_notes": "Pre-booked vehicle. Gate tickets cash for 3 pax. 12:00 transfer to coast.",
+      "cost": 97000
+    },
+    {
+      "day": "D3", "date": "11-05", "date_cn": "11/05 四", "date_en": "Thu 5 Nov",
+      "from": "coast", "to": "coast", "stay": "coast",
+      "km": 0, "note_cn": "海滨休整（第 2 晚）", "note_en": "Beach rest day",
+      "daily_cn": "海滨全天休整，只在酒店海滩下水。",
+      "daily_en": "Beach rest day. Swim at hotel beach only.",
+      "driver_notes": "No fixed drive. Hotel beach only.",
+      "cost": 65000
+    },
+    {
+      "day": "D4", "date": "11-06", "date_cn": "11/06 五", "date_en": "Fri 6 Nov",
+      "leg": "S3", "from": "coast", "to": "city", "stay": "city",
+      "km": 99, "drive": "1h31", "depart": "10:00", "arrive": "~11:30",
+      "note_cn": "海滨 → 大城市", "note_en": "Coast -> city",
+      "daily_cn": "10:00 出发 11:30 到大城市。下午市区购物美食。",
+      "daily_en": "Transfer 10:00-11:30. City shopping and food PM.",
+      "driver_notes": "Morning transfer. City hotel check in.",
+      "cost": 57000
+    },
+    {
+      "day": "D5", "date": "11-07", "date_cn": "11/07 六", "date_en": "Sat 7 Nov",
+      "from": "city", "to": "city", "stay": "city",
+      "km": 0, "note_cn": "市区休整（第 2 晚）", "note_en": "City free day",
+      "daily_cn": "市区机动日，博物馆/独立广场/海滩公园三选一。",
+      "daily_en": "Free day in city. Museum / square / beach park.",
+      "driver_notes": "No fixed drive. City standby.",
+      "cost": 57000
+    },
+    {
+      "day": "D6", "date": "11-08", "date_cn": "11/08 日", "date_en": "Sun 8 Nov",
+      "leg": "S4", "from": "city", "to": "start", "stay": "start",
+      "km": 21, "drive": "0h25", "depart": "10:00", "arrive": "~10:30",
+      "note_cn": "上午大城市 → 到家", "note_en": "City -> home",
+      "daily_cn": "10:00 出发 10:30 到家。",
+      "daily_en": "Home 10:00-10:30.",
+      "driver_notes": "Short return.",
+      "cost": 27000
+    }
+  ],
+
+  "highlights": [
+    ["国家公园", "动物 Safari · 全程坐车"],
+    ["海滨", "海滩 · 酒店休息（共 2 晚）"],
+    ["大城市", "市区 · 购物美食（共 2 晚）"]
+  ],
+  "route_note": [
+    "路线单向不走回头路；高速＋海岸，无山区路段",
+    "园区坐车观看，其余以酒店休息为主"
+  ],
+  "summary_rows": null,
+  "_summary_rows_note": "null = 自动生成（行程天数/车程合计/总预算/人均/含小费弹性/交通方式）；也可写 [[k,v],...] 覆盖",
+
+  "guest": {
+    "cover_title": "起点 → 国家公园 → 海滨 → 大城市 11-03~11-08（6天5晚，3成人）Guest Handbook",
+    "cover_rows": [
+      ["路线", "起点 → 国家公园(1晚) → 海滨(2晚) → 大城市(2晚) → 起点"],
+      ["总驾驶", "439km / 约7h09（151+168+99+21），OSRM实算"],
+      ["亮点", "11-04 清晨园区 06:00 进园，半天约 4h"],
+      ["天气结论", "按采样像素写当天结论，不凭印象"],
+      ["汇率", "¥1≈Rs 42（估算日，出行前重算；费用为估算，以实报为准）"]
+    ],
+    "hotels": {
+      "title": "酒店候选（自行按日期查实时房态，或让旅行社拿B2B价）",
+      "rows": [
+        ["晚", "候选", "档", "三人房要求", "备注"],
+        ["11-03 公园 1晚", "候选A / 候选B / 候选C", "中", "3人+加床+3早，书面确认", "离园区入口近，次日 05:15 出发"],
+        ["11-04~05 海滨 2晚", "候选D / 候选E", "中上", "3人+加床+3早；海景房尽早订", "按日期查实时房态"],
+        ["11-06~07 大城市 2晚", "候选F / 候选G", "中上", "3人+加床+3早；市区堵车，选一处连住", "让旅行社拿 B2B 价"]
+      ]
+    },
+    "costs": {
+      "title": "费用明细（估算，¥1≈Rs 42，2026-10-14）",
+      "rows": [
+        ["项目", "Rs", "约人民币", "说明"],
+        ["包车+司机（6天）", "85000", "2024", "估算：含油路费；司机餐宿另议；以实报为准"],
+        ["住宿 5晚", "166000", "3952", "估算：公园30000+海滨38000x2+大城市30000x2"],
+        ["餐饮 6天", "78000", "1857", "估算：含早，晚餐中档"],
+        ["门票活动", "4500", "107", "估算"],
+        ["小费备用15%", "-", "约1800", "司机小费零食水"],
+        ["合计", "约Rs 365000", "约¥8690", "三人约¥2897/人"]
+      ]
+    },
+    "activity": {
+      "_note": "专项活动表（蓝本中为 Safari）；sheet 为工作表名",
+      "sheet": "专项活动",
+      "title": "园区活动",
+      "rows": [
+        ["项", "内容"],
+        ["日期", "11-04 05:15出发，06:00开门即入，约4h"],
+        ["门票", "现场现金，按人数+车辆计价"],
+        ["看点", "早晨最活跃；全程坐车不用走"],
+        ["带", "护照、现金、防蚊、防水袋、长焦"]
+      ]
+    },
+    "weather_pack": {
+      "title": "天气与打包（写明预报源与起报时次）",
+      "rows": [
+        ["日", "降水", "最高温", "穿带"],
+        ["11-03", "按采样写颜色区间", "低地30-32", "短袖+雨衣+伞"],
+        ["11-04", "最干的一天", "同上", "防晒+防水袋"],
+        ["11-05", "海滨区间", "海岸31", "泳衣+室内备选"],
+        ["11-06", "沿途区间", "31", "同上"],
+        ["11-07", "市区区间", "31", "市区闲逛"],
+        ["11-08", "返程区间", "31", "返程装车"]
+      ]
+    },
+    "todo": {
+      "title": "待办清单",
+      "rows": [
+        ["何时", "事项", "状态"],
+        ["本周", "旅行社比价，要车+5晚三人房+活动分项", "□"],
+        ["本周", "订公园1晚+海滨两晚+大城市两晚（三人房加床3早书面）", "□"],
+        ["出发前1天", "复核最新一版预报与当地预警", "□"],
+        ["出发前", "取现金，备防水袋驱蚊晕车药", "□"]
+      ]
+    }
+  },
+
+  "bilingual": {
+    "_note": "行程中英对照表：逐日指令 + 每日例行规则，两列：中文指令 / English",
+    "sheet": "指令",
+    "rows": [
+      ["中文指令", "English"],
+      ["三位成人+行李，包车，含油路费，司机餐宿按合同", "3 pax + luggage, private vehicle, fuel+tolls+driver stay per contract"],
+      ["11-03 08:00起点出发，中午前到国家公园；次日05:15出发", "3 Nov 08:00 pickup, arrive park by noon; 05:15 start next day"],
+      ["11-04 活动已提前订好，06:00进园约4h；12:00去海滨", "Pre-booked, 06:00 entry 4h; 12:00 transfer to coast"],
+      ["11-05 海滨无固定行程，只在酒店海滩下水", "5 Nov coast standby; hotel beach only"],
+      ["11-06 10:00去大城市；11-07市区景点", "6 Nov transfer to city; 7 Nov city tour"],
+      ["11-08 10:00大城市出发回家，约25分钟", "8 Nov 10:00 city departure, ~25 min"],
+      ["每天19:00报次日预警，红警就地等，不赶路", "Report warning 19:00 daily; red alert = hold, no rush"]
+    ]
+  },
+
+  "basemap": {
+    "_note": "由 fetch_basemap.py \"国家英文名\" 生成到 basemap/ 目录；ref_places 是灰色参考城市，sea_labels 是海名标注",
+    "country": "basemap/country.geojson",
+    "admin1": "basemap/admin1.geojson",
+    "ref_places": [
+      { "lon": 0.0, "lat": 0.0, "name": "参考城市" }
+    ],
+    "sea_labels": [
+      { "lon": 0.0, "lat": 0.0, "name": "海名\nSea Name" }
+    ],
+    "legend_pos": null,
+    "_legend_pos": "[lon, lat] 可选：图例落点；null = 左上角"
+  },
+
+  "weather": {
+    "_note": "预报对照 PDF：每天一张官方预报图 + 顶部横幅 + 路线叠加。预报图须自行从官方渠道下载并渲染成 PNG（见 references/weather.md），绝不使用天气App图标作结论",
+    "src_dir": "forecast_png",
+    "banner": {
+      "metrics": "左降水mm 右最高温C",
+      "source": "预报源+起报时次+本地时区换算 红线=当天行程"
+    },
+    "cities": { "start": "起点", "park": "园区", "coast": "海滨", "city": "大城市" },
+    "order": ["start", "park", "coast", "city"],
+    "label_off": { "start": [-118, -12], "park": [18, -10], "coast": [18, -10], "city": [20, -54] },
+    "panel": {
+      "_note": "预报图上目标区域的像素包围盒与经纬度范围：先估一个框，再用 zoom 裁剪逐一校准（见 references/weather.md）",
+      "bbox_px": [170, 950, 150, 1420],
+      "lat_top": 9.85, "lat_bot": 5.85,
+      "lon_l": 79.65, "lon_r": 81.95
+    },
+    "xy_override": {},
+    "days": [
+      { "date": "11-03", "title": "11-03 起点-园区", "page": "p04.png",
+        "seg": ["start", "park"], "verdict": "按像素采样写：颜色区间+行动建议" },
+      { "date": "11-04", "title": "11-04 园区-海滨", "page": "p05.png",
+        "seg": ["park", "coast"], "verdict": "…" },
+      { "date": "11-05", "title": "11-05 海滨休整", "page": "p06.png",
+        "seg": ["coast", "coast"], "verdict": "…" },
+      { "date": "11-06", "title": "11-06 海滨-大城市", "page": "p07.png",
+        "seg": ["coast", "city"], "verdict": "…" },
+      { "date": "11-07", "title": "11-07 大城市休整", "page": "p08.png",
+        "seg": ["city", "city"], "verdict": "…" },
+      { "date": "11-08", "title": "11-08 大城市-起点", "page": "p09.png",
+        "seg": ["city", "start"], "verdict": "…" }
+    ]
+  }
+}
